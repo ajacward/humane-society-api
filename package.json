@@ -1,0 +1,22 @@
+{
+  "name": "humane-society-api",
+  "version": "0.0.1",
+  "description": "An example Node backend",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "8.35.0",
+    "eslint-config-google": "0.14.0",
+    "nodemon": "2.0.21"
+  },
+  "dependencies": {
+    "body-parser": "1.20.2",
+    "express": "4.18.2"
+  }
+}
