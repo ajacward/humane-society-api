@@ -2,17 +2,24 @@
  * @fileoverview Entry point to humane society api
  */
 
-import bodyParser from 'body-parser';
+import https from 'https';
+import fs from 'fs';
+
 import express from 'express';
 
 import {router as petRouter} from './pets/pet_routes.js';
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+const options = {
+//  key: fs.readFileSync('path/to/private/key'),
+//  cert: fs.readFileSync('path/to/public/cert'),
+};
 
-app.use(bodyParser.json());
+const app = express();
+
+app.use(express.json());
 app.use('/api/pets', petRouter);
 
-app.listen(PORT, () => {
-  console.log(`API is listening on port ${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => void console.log(`API is listening on port ${PORT}`));
+
+https.createServer(options, app).listen(PORT + 80);

@@ -8,9 +8,7 @@ import * as PetRepository from './pet_repository.js';
  * Retrieve all pet records
  * @return {pet[]}
  */
-const getAllPets = () => {
-  return PetRepository.getAllPets();
-};
+const getAllPets = () => PetRepository.getAllPets();
 
 /**
  * Retrieve one pet record
@@ -24,9 +22,7 @@ const getOnePet = () => {
  * @param {pet} newPet
  * @return {pet}
  */
-const addNewPet = (newPet) => {
-  return PetRepository.addNewPet(newPet);
-};
+const addNewPet = (newPet) => PetRepository.addNewPet(newPet);
 
 /**
  * Update a pet record

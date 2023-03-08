@@ -10,8 +10,7 @@ import * as PetService from './pet_service.js';
  * @param {response} res
  */
 const getAllPets = (req, res) => {
-  const allPets = PetService.getAllPets();
-  res.send({status: 'OK', data: allPets});
+  res.json({status: 'OK', data: PetService.getAllPets()});
 };
 
 /**
@@ -37,9 +36,7 @@ const addNewPet = (req, res) => {
     species: body.species,
   };
 
-  const addedPet = PetService.addNewPet(newPet);
-
-  res.status(201).send({status: 'OK', data: addedPet});
+  res.status(201).json({status: 'OK', data: PetService.addNewPet(newPet)});
 };
 
 /**

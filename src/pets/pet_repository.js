@@ -18,9 +18,7 @@ let nextAvailableId = 2;
  * Return all in memory pets
  * @return {pet[]}
  */
-const getAllPets = () => {
-  return [...pets.values()];
-};
+const getAllPets = () => [...pets.values()];
 
 /**
  * Persist new pet and return pet with id
