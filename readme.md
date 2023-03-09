@@ -1,6 +1,8 @@
 ```
 docker run \
   -e "NODE_ENV=production" \
+  -e "IDENTITY_PATH=/path/to/identity/cert" \
+  -e "TRUST_PATH=/path/to/trust/cert" \
   -m "300M" --memory-swap "1G" \
   --name "humane-society-api" \
   image-name

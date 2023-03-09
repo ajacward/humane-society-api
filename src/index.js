@@ -2,26 +2,57 @@
  * @fileoverview Entry point to humane society api
  */
 
-import https from 'https';
-import fs from 'fs';
+import https from 'node:https';
+import {readFile} from 'node:fs/promises';
 
 import express from 'express';
 
 import {router as adopterRouter} from './adopters/adopter_routes.js';
 import {router as petRouter} from './pets/pet_routes.js';
 
-const options = {
-//  key: fs.readFileSync('path/to/private/key'),
-//  cert: fs.readFileSync('path/to/public/cert'),
+/**
+ * Allows server to listen over https
+ * @param {Express} app
+ */
+const runHttps = async (app) => {
+  try {
+    const identityValue = await readFile(
+        process.env.IDENTITY_PATH, {encoding: 'utf8'});
+    const trustValue = await readFile(
+        process.env.TRUST_PATH, {encoding: 'utf8'});
+
+    const options = {
+      key: identityValue,
+      cert: trustValue,
+    };
+
+    const HTTPS_PORT = process.env.HTTPS_PORT || 3080;
+    https.createServer(options, app)
+        .listen(HTTPS_PORT,
+            () => void console.log(`API is listening on port ${HTTPS_PORT}`));
+  } catch (err) {
+    console.error(err.message);
+  }
 };
 
-const app = express();
+/**
+ * Entry point to api
+ */
+const main = () => {
+  const app = express();
 
-app.use(express.json());
-app.use('/api/adopters', adopterRouter);
-app.use('/api/pets', petRouter);
+  app.use(express.json());
+  app.use('/api/adopters', adopterRouter);
+  app.use('/api/pets', petRouter);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => void console.log(`API is listening on port ${PORT}`));
+  const HTTP_PORT = process.env.HTTP_PORT || 3000;
+  app.listen(
+      HTTP_PORT,
+      () => void console.log(`API is listening on port ${HTTP_PORT}`));
 
-https.createServer(options, app).listen(PORT + 80);
+  if (process.env.IDENTITY_PATH && process.env.TRUST_PATH) {
+    runHttps(app);
+  }
+};
+
+main();
