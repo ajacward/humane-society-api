@@ -6,16 +6,17 @@ import * as PetRepository from './pet_repository.js';
 
 /**
  * Retrieve all pet records
+ * @param {string} name
  * @return {pet[]}
  */
-const getAllPets = () => PetRepository.getAllPets();
+const getAllPets = (name) => PetRepository.getAllPets(name);
 
 /**
  * Retrieve one pet record
+ * @param {number} petId
+ * @return {pet}
  */
-const getOnePet = () => {
-  return;
-};
+const getOnePet = (petId) => PetRepository.getOnePet(petId) ?? {};
 
 /**
  * Add a new pet record

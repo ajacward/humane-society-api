@@ -10,7 +10,8 @@ import * as PetService from './pet_service.js';
  * @param {response} res
  */
 const getAllPets = (req, res) => {
-  res.json({status: 'OK', data: PetService.getAllPets()});
+  const {name} = req.query;
+  res.json({status: 'OK', data: PetService.getAllPets(name)});
 };
 
 /**
@@ -19,8 +20,15 @@ const getAllPets = (req, res) => {
  * @param {response} res
  */
 const getOnePet = (req, res) => {
-  const pet = PetService.getOnePet();
-  res.send('Get an existing pet');
+  const {
+    params: {petId},
+  } = req;
+
+  if (!petId) {
+    return;
+  }
+
+  res.json({status: 'OK', data: PetService.getOnePet(parseInt(petId))});
 };
 
 /**
@@ -30,6 +38,17 @@ const getOnePet = (req, res) => {
  */
 const addNewPet = (req, res) => {
   const {body} = req;
+
+  if (!body.name || !body.age || !body.species) {
+    res.status(400).json({
+      status: 'FAILED',
+      data: {
+        error: 'Invalid name, age or species',
+      },
+    });
+    return;
+  }
+
   const newPet = {
     name: body.name,
     age: body.age,

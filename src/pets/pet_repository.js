@@ -16,9 +16,20 @@ let nextAvailableId = 2;
 
 /**
  * Return all in memory pets
+ * @param {string} name
  * @return {pet[]}
  */
-const getAllPets = () => [...pets.values()];
+const getAllPets = (name) =>
+    name ?
+    [...pets.values()].filter((pet) => pet.name === name) :
+    [...pets.values()];
+
+/**
+ * Return pet matching id if found
+ * @param {number} petId
+ * @return {pet}
+ */
+const getOnePet = (petId) => pets.get(petId);
 
 /**
  * Persist new pet and return pet with id
@@ -35,4 +46,4 @@ const addNewPet = (newPet) => {
   return addedPet;
 };
 
-export {getAllPets, addNewPet};
+export {getAllPets, addNewPet, getOnePet};
