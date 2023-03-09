@@ -43,7 +43,7 @@ const addNewPet = (req, res) => {
     res.status(400).json({
       status: 'FAILED',
       data: {
-        error: 'Invalid name, age or species',
+        error: 'Missing name, age or species',
       },
     });
     return;
@@ -64,8 +64,34 @@ const addNewPet = (req, res) => {
  * @param {response} res
  */
 const updateOnePet = (req, res) => {
-  const updatedPet = PetService.updateOnePet();
-  res.send('Update an existing pet');
+  const {
+    body,
+    params: {petId},
+  } = req;
+
+  if (!petId) {
+    return;
+  }
+
+  if (!body.name || !body.age || !body.species) {
+    res.status(400).json({
+      status: 'FAILED',
+      data: {
+        error: 'Missing name, age or species',
+      },
+    });
+    return;
+  }
+
+  const newPetData = {
+    name: body.name,
+    age: body.age,
+    species: body.species,
+  };
+
+  res.json(
+      {status: 'OK',
+        data: PetService.updateOnePet(parseInt(petId), newPetData)});
 };
 
 /**
@@ -74,8 +100,17 @@ const updateOnePet = (req, res) => {
  * @param {response} res
  */
 const deleteOnePet = (req, res) => {
-  const removedPet = PetService.deleteOnePet();
-  res.send('Delete an existing pet');
+  const {
+    params: {petId},
+  } = req;
+
+  if (!petId) {
+    return;
+  }
+
+  res.json(
+      {status: 'OK',
+        data: PetService.deleteOnePet(parseInt(petId))});
 };
 
 export {

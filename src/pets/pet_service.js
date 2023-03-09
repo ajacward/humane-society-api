@@ -27,17 +27,19 @@ const addNewPet = (newPet) => PetRepository.addNewPet(newPet);
 
 /**
  * Update a pet record
+ * @param {number} petId
+ * @param {pet} newPetData
+ * @return {pet}
  */
-const updateOnePet = () => {
-  return;
-};
+const updateOnePet =
+    (petId, newPetData) => PetRepository.updateOnePet(petId, newPetData);
 
 /**
  * Remove a pet record
+ * @param {number} petId
+ * @return {boolean}
  */
-const deleteOnePet = () => {
-  return;
-};
+const deleteOnePet = (petId) => PetRepository.deleteOnePet(petId);
 
 export {
   getAllPets,

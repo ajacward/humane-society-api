@@ -46,4 +46,33 @@ const addNewPet = (newPet) => {
   return addedPet;
 };
 
-export {getAllPets, addNewPet, getOnePet};
+/**
+ * Update pet data by id
+ * @param {number} petId
+ * @param {pet} newPetData
+ * @return {pet}
+ */
+const updateOnePet = (petId, newPetData) => {
+  if (!pets.has(petId)) {
+    return {};
+  }
+
+  pets.set(petId, newPetData);
+
+  return pets.get(petId);
+};
+
+/**
+ * Deletes pet record by id
+ * @param {number} petId
+ * @return {boolean}
+ */
+const deleteOnePet = (petId) => pets.delete(petId);
+
+export {
+  getAllPets,
+  addNewPet,
+  getOnePet,
+  updateOnePet,
+  deleteOnePet,
+};
