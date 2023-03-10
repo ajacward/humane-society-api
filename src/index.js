@@ -2,8 +2,8 @@
  * @fileoverview Entry point to humane society api
  */
 
-import https from 'node:https';
 import {readFile} from 'node:fs/promises';
+import https from 'node:https';
 
 import express from 'express';
 
@@ -29,7 +29,7 @@ const runHttps = async (app) => {
     const HTTPS_PORT = process.env.HTTPS_PORT || 3080;
     https.createServer(options, app)
         .listen(HTTPS_PORT,
-            () => void console.log(`API is listening on port ${HTTPS_PORT}`));
+            () => console.log(`API is listening on port ${HTTPS_PORT}`));
   } catch (err) {
     console.error(err.message);
   }
@@ -46,9 +46,11 @@ const main = () => {
   app.use('/api/pets', petRouter);
 
   const HTTP_PORT = process.env.HTTP_PORT || 3000;
+  // The server is set to listen on two different ports
+  // Remove this app.listen call if no need for http unsecure
   app.listen(
       HTTP_PORT,
-      () => void console.log(`API is listening on port ${HTTP_PORT}`));
+      () => console.log(`API is listening on port ${HTTP_PORT}`));
 
   if (process.env.IDENTITY_PATH && process.env.TRUST_PATH) {
     runHttps(app);

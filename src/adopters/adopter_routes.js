@@ -4,10 +4,12 @@
 
 import express from 'express';
 
-import * as AdopterController from './adopter_controller.js';
+import * as AdopterRepository from './adopter_repository.js';
 
 const router = express.Router();
 
-router.get('/', AdopterController.getAllAdopters);
+router.get('/', (req, res) => {
+  res.json({status: 'OK', data: AdopterRepository.getAllAdopters()});
+});
 
 export {router};
