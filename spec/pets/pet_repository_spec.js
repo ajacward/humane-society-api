@@ -1,4 +1,4 @@
-import * as PetRepository from '../../src/pets/pet_repository.js';
+import * as PetRepository from '../../dist/pets/pet_repository.js';
 
 describe('PetRepository', () => {
   it('getAllPets starts with one entry', () => {

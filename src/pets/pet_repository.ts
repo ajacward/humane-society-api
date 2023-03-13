@@ -2,10 +2,12 @@
  * @fileoverview Module for exposing pet resource related persistence calls
  */
 
+import {Pet} from './pet.js';
+
 /**
  * In memory collection of pet records
  */
-const pets = new Map([
+const pets: Map<number, Pet> = new Map([
   [1, {id: 1, name: 'Malibu', age: 12, species: 'cat'}],
 ]);
 
@@ -16,43 +18,40 @@ let nextAvailableId = 2;
 
 /**
  * Return all in memory pets
- * @param {string} name
- * @return {pet[]}
+ * @param name
  */
-const getAllPets = (name) =>
-    name ?
+function getAllPets(name: string) {
+    return name ?
     [...pets.values()].filter((pet) => pet.name === name) :
     [...pets.values()];
+}
 
 /**
  * Return pet matching id if found
- * @param {number} petId
- * @return {pet}
  */
-const getOnePet = (petId) => pets.get(petId);
+function getOnePet(petId: number) {
+  return pets.get(petId);
+}
 
 /**
  * Persist new pet and return pet with id
- * @param {pet} newPet
- * @return {pet}
  */
-const addNewPet = (newPet) => {
+function addNewPet(newPet: Pet) {
   const petId = nextAvailableId;
-  const addedPet = {id: petId, ...newPet};
+  const addedPet: Pet = {...newPet, id: petId};
   pets.set(petId, addedPet);
 
   nextAvailableId += 1;
 
   return addedPet;
-};
+}
 
 /**
  * Update pet data by id
- * @param {number} petId
- * @param {pet} newPetData
- * @return {pet}
+ * @param petId
+ * @param newPetData
  */
-const updateOnePet = (petId, newPetData) => {
+function updateOnePet(petId: number, newPetData: Pet) {
   if (!pets.has(petId)) {
     return {};
   }
@@ -64,10 +63,11 @@ const updateOnePet = (petId, newPetData) => {
 
 /**
  * Deletes pet record by id
- * @param {number} petId
- * @return {boolean}
+ * @param petId
  */
-const deleteOnePet = (petId) => pets.delete(petId);
+function deleteOnePet(petId: number) {
+  return pets.delete(petId);
+}
 
 export {
   getAllPets,

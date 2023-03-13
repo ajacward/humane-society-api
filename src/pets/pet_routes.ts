@@ -5,12 +5,18 @@
 import express from 'express';
 
 import * as PetRepository from './pet_repository.js';
+import {Pet} from './pet.js';
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
   const {name} = req.query;
-  res.json({status: 'OK', data: PetRepository.getAllPets(name)});
+
+  if (typeof name !== 'string' && typeof name !== 'undefined') {
+    throw new TypeError('Query param must be string or undefined');
+  }
+
+  res.json({status: 'OK', data: PetRepository.getAllPets(name ?? '')});
 });
 
 router.get('/:petId', (req, res) => {
@@ -31,7 +37,7 @@ router.post('/', (req, res) => {
     return;
   }
 
-  const newPet = {
+  const newPet: Pet = {
     name: body.name,
     age: body.age,
     species: body.species,
@@ -56,7 +62,7 @@ router.put('/:petId', (req, res) => {
     return;
   }
 
-  const newPetData = {
+  const newPetData: Pet = {
     name: body.name,
     age: body.age,
     species: body.species,
